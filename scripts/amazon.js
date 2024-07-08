@@ -1,4 +1,5 @@
-import {cart} from '../data/cart.js' // .. means the folder outside of the actual folder
+import {cart} from '../data/cart.js'; // .. means the folder outside of the actual folder
+import {products} from '../data/products.js';
 
 let productsHTML = ''
 
