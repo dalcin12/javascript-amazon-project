@@ -1,3 +1,5 @@
+import {cart} from '../data/cart.js' // .. means the folder outside of the actual folder
+
 let productsHTML = ''
 
 products.forEach((product) => {
