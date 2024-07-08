@@ -93,7 +93,6 @@ cart.forEach((cartItem) => {
     </div>
   `
 })
-console.log(cart)
 document.querySelector('.js-order-summary')
   .innerHTML = cartSummaryHTML
 
