@@ -1,4 +1,4 @@
-export let cart;
+export let cart; // === let cart = undefined;
 
 loadFromStorage()
 
