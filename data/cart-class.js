@@ -1,14 +1,14 @@
-class Cart { // class help us generate those objects
-  cartItems; // class === object generator
-  localStorageKey; // === localStorageKey = undefined;
-
+class Cart {              // class help us generate those objects
+  cartItems;              // class === object generator
+  #localStorageKey;        // === localStorageKey = undefined;
+// # === private property === it cant be used outside of the class
   constructor(localStorageKey) {
-    this.localStorageKey = localStorageKey; // 'this' points to the object that we generate
-    this.loadFromStorage();
+    this.#localStorageKey = localStorageKey; // 'this' points to the object that we generate
+    this.#loadFromStorage();
   }
 
-  loadFromStorage() { // shortcut for: loadFromStorage: function() {...}
-    this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+  #loadFromStorage() {   // shortcut for: loadFromStorage: function() {...}
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
   
     if (!this.cartItems) {
       this.cartItems = [{
@@ -24,7 +24,7 @@ class Cart { // class help us generate those objects
   }
 
   saveToStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems))
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems))
   }
 
   addToCart(productId, quantity = 1) {
