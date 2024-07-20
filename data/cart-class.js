@@ -1,13 +1,15 @@
-class Cart {              // class help us generate those objects
-  cartItems;              // class === object generator
-  #localStorageKey;        // === localStorageKey = undefined;
-// # === private property === it cant be used outside of the class
+import { validDeliveryOption } from "./deliveryOptions.js";
+
+export class Cart {              // class help us generate those objects
+  cartItems;                     // class === object generator
+  #localStorageKey;              // === localStorageKey = undefined;
+// # === private property === it can't be used outside of the class
   constructor(localStorageKey) {
     this.#localStorageKey = localStorageKey; // 'this' points to the object that we generate
-    this.#loadFromStorage();
+    this.loadFromStorage();
   }
 
-  #loadFromStorage() {   // shortcut for: loadFromStorage: function() {...}
+  loadFromStorage() {   // shortcut for: loadFromStorage: function() {...}
     this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
   
     if (!this.cartItems) {
@@ -97,15 +99,24 @@ class Cart {              // class help us generate those objects
       }
     });
   
+    if(!matchingItem) {
+      return;
+    }
+  
+    if (!validDeliveryOption(deliveryOptionId)) {
+      return;
+    }
+  
     matchingItem.deliveryOptionId = deliveryOptionId
   
     this.saveToStorage()
   }
 }
 
-const cart = new Cart('cart-oop'); // this cart is a instance of a class
+export const cart = new Cart('cart-oop'); // this cart is a instance of a class
 const businessCart = new Cart('cart-business'); // the parameters here are going to the constructor
 
 console.log(cart)
 console.log(businessCart)
+console.log(cart instanceof Cart)
 console.log(businessCart instanceof Cart)

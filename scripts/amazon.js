@@ -1,4 +1,4 @@
-import { cart, addToCart, calculateCartQuantity } from '../data/cart.js'; // .. means the folder outside of the actual folder
+import { cart } from '../data/cart-class.js'; // .. means the folder outside of the actual folder
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -65,7 +65,7 @@ products.forEach((product) => {
 document.querySelector(`.js-products-grid`).innerHTML = productsHTML
 
 function updateCartQuantity() {
-  let cartQuantity = calculateCartQuantity()
+  let cartQuantity = cart.calculateCartQuantity()
 
   document.querySelector(`.js-cart-quantity`)
     .innerHTML = cartQuantity
@@ -93,7 +93,7 @@ document.querySelectorAll(`.js-add-to-cart`)
       
       addedMessageTimeoutId = timeoutId
       
-      addToCart(productId, quantity);
+      cart.addToCart(productId, quantity);
       updateCartQuantity();
     })
   })
