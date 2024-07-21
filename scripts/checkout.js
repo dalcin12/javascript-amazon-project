@@ -7,6 +7,22 @@ import { cart } from '../data/cart-class.js';
 // import '../data/cart-class.js'
 // import '../data/backend-practice.js'
 
+async function loadPage() { // async makes a function returns a promise
+  await loadProductsFetch() // can only use await when in a async function
+  
+  const value = await new Promise((resolve) => {
+    cart.loadCart(() => {
+      resolve('value3');
+    })
+  })
+
+  renderCheckoutHeader()
+  renderOrderSummary()
+  renderPaymentSummary()
+}
+loadPage()
+
+/*
 Promise.all([ // array of promises that wait all the promises to finish to continue the code
   loadProductsFetch(),
   new Promise((resolve) => {
@@ -20,6 +36,7 @@ Promise.all([ // array of promises that wait all the promises to finish to conti
   renderOrderSummary()
   renderPaymentSummary()
 })
+*/
 
 /*
 new Promise((resolve) => { // it runs the inner function immediately
