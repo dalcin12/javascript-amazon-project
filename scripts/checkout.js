@@ -8,13 +8,20 @@ import { cart } from '../data/cart-class.js';
 // import '../data/backend-practice.js'
 
 async function loadPage() { // async makes a function returns a promise
-  await loadProductsFetch() // can only use await when in a async function
+  try {
+    // throw 'error1' // thats for create an error
+    await loadProductsFetch() // can only use await when in a async function
   
-  const value = await new Promise((resolve) => {
-    cart.loadCart(() => {
-      resolve('value3');
+    const value = await new Promise((resolve, reject) => {
+      // throw 'error2'
+      cart.loadCart(() => {
+        // reject('error3') // creates an error in the future
+        resolve('value3');
+      })
     })
-  })
+  } catch (error) {
+    console.log('Unexpected error. Please try again later.')
+  }
 
   renderCheckoutHeader()
   renderOrderSummary()
