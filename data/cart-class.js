@@ -111,6 +111,18 @@ class Cart {              // class help us generate those objects
   
     this.saveToStorage()
   }
+
+  loadCart(fun) {
+    const xhr = new XMLHttpRequest();
+  
+    xhr.addEventListener('load', () => {
+      console.log(xhr.response);
+      fun();
+    })
+  
+    xhr.open('GET', 'https://supersimplebackend.dev/cart');
+    xhr.send();
+  }
 }
 
 export const cart = new Cart('cart-oop'); // this cart is a instance of a class
