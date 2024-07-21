@@ -1,6 +1,6 @@
 import { validDeliveryOption } from "./deliveryOptions.js";
 
-export class Cart {              // class help us generate those objects
+class Cart {              // class help us generate those objects
   cartItems;                     // class === object generator
   #localStorageKey;              // === localStorageKey = undefined;
 // # === private property === it can't be used outside of the class
