@@ -1,6 +1,6 @@
 import { orders } from "../data/orders.js";
-import { calculateDeliveryDate, getDeliveryOption } from "../data/deliveryOptions.js";
 import { formatCurrency } from './utils/money.js'
+import { cart } from "../data/cart-class.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 
@@ -79,8 +79,49 @@ async function loadPage() {
     return productListHTML
   }
   
+  function renderOrdersHeader() {
+    let ordersHeader = ''
+
+    ordersHeader += `
+      <div class="amazon-header-left-section">
+        <a href="amazon.html" class="header-link">
+          <img class="amazon-logo"
+            src="images/amazon-logo-white.png">
+          <img class="amazon-mobile-logo"
+            src="images/amazon-mobile-logo-white.png">
+        </a>
+      </div>
+
+      <div class="amazon-header-middle-section">
+        <input class="search-bar" type="text" placeholder="Search">
+
+        <button class="search-button">
+          <img class="search-icon" src="images/icons/search-icon.png">
+        </button>
+      </div>
+
+      <div class="amazon-header-right-section">
+        <a class="orders-link header-link" href="orders.html">
+          <span class="returns-text">Returns</span>
+          <span class="orders-text">& Orders</span>
+        </a>
+
+        <a class="cart-link header-link" href="checkout.html">
+          <img class="cart-icon" src="images/icons/cart-icon.png">
+          <div class="cart-quantity">${cart.calculateCartQuantity()}</div>
+          <div class="cart-text">Cart</div>
+        </a>
+      </div>
+    `
+
+    return ordersHeader;
+  }
+  const ordersHeader = renderOrdersHeader()
   document.querySelector(`.js-orders-grid`)
     .innerHTML = ordersHTML
+
+  document.querySelector(`.js-amazon-header`)
+    .innerHTML = ordersHeader
 }
 
 loadPage()

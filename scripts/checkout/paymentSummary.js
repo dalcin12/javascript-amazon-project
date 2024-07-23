@@ -89,6 +89,8 @@ export function renderPaymentSummary() {
         console.log('Unexpected error. Try again later.')
       }
       
+      cart.cartItems = []
+      cart.saveToStorage()
       window.location.href = 'orders.html'
     })
 }
