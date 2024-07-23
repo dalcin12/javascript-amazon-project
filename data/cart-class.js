@@ -13,6 +13,8 @@ class Cart {              // class help us generate those objects
     this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
   
     if (!this.cartItems) {
+      this.cartItems = []
+      /*
       this.cartItems = [{
         productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
         quantity: 2,
@@ -22,6 +24,7 @@ class Cart {              // class help us generate those objects
         quantity: 1,
         deliveryOptionId: '2'
       }];
+      */
     }
   }
 
@@ -123,12 +126,13 @@ class Cart {              // class help us generate those objects
     xhr.open('GET', 'https://supersimplebackend.dev/cart');
     xhr.send();
   }
+
+  async loadCartFetch() {
+    const response = await fetch('https://supersimplebackend.dev/cart')
+    const cart = await response.text()
+    console.log(cart)
+  }
 }
 
 export const cart = new Cart('cart-oop'); // this cart is a instance of a class
-const businessCart = new Cart('cart-business'); // the parameters here are going to the constructor
-
-console.log(cart)
-console.log(businessCart)
-console.log(cart instanceof Cart)
-console.log(businessCart instanceof Cart)
+// const businessCart = new Cart('cart-business'); // the parameters here are going to the constructor
