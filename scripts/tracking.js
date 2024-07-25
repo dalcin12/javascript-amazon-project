@@ -2,6 +2,7 @@ import { getProduct, loadProductsFetch } from "../data/products.js"
 import { orders } from "../data/orders.js"
 import { cart } from "../data/cart-class.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
+import { redirectToHomePage } from "./utils/searchBar.js";
 
 function getOrder(orderId) {
   let matchingOrder;
@@ -54,9 +55,9 @@ function renderTrackingHeader() {
     </div>
 
     <div class="amazon-header-middle-section">
-      <input class="search-bar" type="text" placeholder="Search">
+      <input class="search-bar js-search-bar" type="text" placeholder="Search">
 
-      <button class="search-button">
+      <button class="search-button js-search-button">
         <img class="search-icon" src="images/icons/search-icon.png">
       </button>
     </div>
@@ -139,6 +140,7 @@ async function loadPage() {
     .setAttribute('style', `width: ${progressPercent}%`)
 
   renderTrackingHeader()
+  redirectToHomePage()
 } 
 
 loadPage()

@@ -18,6 +18,7 @@ export class Product {
   name;
   rating;
   priceCents;
+  keywords;
 
   constructor(productDetails) {
     this.id = productDetails.id;
@@ -25,6 +26,7 @@ export class Product {
     this.name = productDetails.name;
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
+    this.keywords = productDetails.keywords;
   }
 
   getStarsUrl() {
@@ -119,7 +121,7 @@ export function loadProductsFetch() {
       if (productDetails.type === 'clothing') {
         return new Clothing(productDetails)
       }
-      if (productDetails.type === 'appliance') {
+      if (productDetails.keywords.includes("appliances")) {
         return new Appliance(productDetails)
       }
       return new Product(productDetails);
@@ -144,7 +146,7 @@ export function loadProducts(fun) {
       if (productDetails.type === 'clothing') {
         return new Clothing(productDetails)
       }
-      if (productDetails.type === 'appliance') {
+      if (productDetails.keywords.includes('appliances')) {
         return new Appliance(productDetails)
       }
       return new Product(productDetails);

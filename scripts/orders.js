@@ -3,6 +3,7 @@ import { formatCurrency } from './utils/money.js'
 import { cart } from "../data/cart-class.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
+import { redirectToHomePage } from './utils/searchBar.js';
 
 async function loadPage() {
   await loadProductsFetch();
@@ -44,7 +45,6 @@ async function loadPage() {
 
     order.products.forEach(productDetails => {
       const product = getProduct(productDetails.productId)
-
       productListHTML += `
     <div class="product-image-container">
       <img src="${product.image}">
@@ -55,7 +55,11 @@ async function loadPage() {
         ${product.name}
       </div>
       <div class="product-delivery-date">
-        Arriving on: ${dayjs(productDetails.estimatedDeliveryTime).format(`MMMM D`)}
+        ${productDetails.estimatedDeliveryTime !== order.orderTime
+          ?
+          `Arriving on: ${dayjs(productDetails.estimatedDeliveryTime).format(`MMMM D`)}`
+          :
+          `Delivered.`}
       </div>
       <div class="product-quantity">
         Quantity: ${productDetails.quantity}
@@ -94,9 +98,9 @@ function renderOrdersHeader() {
       </div>
 
       <div class="amazon-header-middle-section">
-        <input class="search-bar" type="text" placeholder="Search">
+        <input class="search-bar js-search-bar" type="text" placeholder="Search">
 
-        <button class="search-button">
+        <button class="search-button js-search-button">
           <img class="search-icon" src="images/icons/search-icon.png">
         </button>
       </div>
@@ -139,6 +143,7 @@ function renderOrdersHeader() {
   })
 
   renderOrdersHeader()
+  redirectToHomePage()
 }
 
 loadPage()
