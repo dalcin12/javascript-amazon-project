@@ -89,7 +89,7 @@ function renderOrdersHeader() {
     
     ordersHeaderHTML += `
     <div class="amazon-header-left-section">
-        <a href="amazon.html" class="header-link">
+        <a href="index.html" class="header-link">
           <img class="amazon-logo"
             src="images/amazon-logo-white.png">
           <img class="amazon-mobile-logo"
@@ -126,11 +126,27 @@ function renderOrdersHeader() {
   .innerHTML = ordersHTML
 
   document.querySelectorAll(`.js-buy-again-button`).forEach(button => {
+    let addedMessageTimeoutId;
     button.addEventListener('click', () => {
       const { productId } = button.dataset
       cart.addToCart(productId, 1)
       renderOrdersHeader()
+      
+      button.innerHTML = 'Added ✓'
+      button.classList.add(`added-to-cart`)
+
+      if (addedMessageTimeoutId) {
+        clearTimeout(addedMessageTimeoutId)
+      }
+      
+      let timeoutId = setTimeout(() => {
+        button.innerHTML = '<img class="buy-again-icon" src="images/icons/buy-again.png"><span class="buy-again-message">Buy it again</span>'
+        button.classList.remove(`added-to-cart`)
+      }, 2000);
+
+      addedMessageTimeoutId = timeoutId
     })
+    
   })
 
   document.querySelectorAll('.js-track-package-button').forEach(button => {
