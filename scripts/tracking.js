@@ -4,7 +4,7 @@ import { cart } from "../data/cart-class.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 import { redirectToHomePage } from "./utils/searchBar.js";
 
-function getOrder(orderId) {
+export function getOrder(orderId) {
   let matchingOrder;
 
   orders.forEach(order => {
@@ -16,7 +16,7 @@ function getOrder(orderId) {
   return matchingOrder;
 }
 
-function getOrderInfo(order, productId) {
+export function getOrderInfo(order, productId) {
   let orderInfo = {}
   let matchingProduct;
 
@@ -33,10 +33,14 @@ function getOrderInfo(order, productId) {
   return orderInfo
 }
 
-function calculateProgressPercent(order, orderInfo) {
+export function calculateProgressPercent(order, orderInfo) {
   let progressPercent;
 
   progressPercent = (dayjs() - dayjs(order.orderTime)) / (dayjs(orderInfo.estimatedDeliveryTime) - dayjs(dayjs(order.orderTime))) * 100
+
+  if (progressPercent > 100) {
+    progressPercent = 100
+  }
 
   return progressPercent
 }
@@ -80,7 +84,7 @@ function renderTrackingHeader() {
     .innerHTML = trackingHeader
 }
 
-async function loadPage() {
+async function loadTrackingPage() {
   await loadProductsFetch()
   
   const url = new URL(window.location.href)
@@ -92,7 +96,7 @@ async function loadPage() {
   const product = getProduct(productId)
   const orderInfo = getOrderInfo(order, productId)
   const progressPercent = calculateProgressPercent(order, orderInfo)
-
+  
   let html = ''
 
   html += `
@@ -102,7 +106,11 @@ async function loadPage() {
         </a>
 
         <div class="delivery-date">
-          Arriving on ${dayjs(orderInfo.estimatedDeliveryTime).format('dddd, MMMM DD')}
+          ${ 
+            progressPercent === 100 ?
+            `Delivered.` :
+            `Arriving on ${dayjs(orderInfo.estimatedDeliveryTime).format('dddd, MMMM DD')}`
+          }
         </div>
 
         <div class="product-info">
@@ -141,6 +149,8 @@ async function loadPage() {
 
   renderTrackingHeader()
   redirectToHomePage()
+
+  return progressPercent;
 } 
 
-loadPage()
+loadTrackingPage()

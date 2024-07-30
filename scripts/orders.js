@@ -42,7 +42,7 @@ async function loadPage() {
 
   function productsListHTML(order) {
     let productListHTML = ''
-
+    
     order.products.forEach(productDetails => {
       const product = getProduct(productDetails.productId)
       productListHTML += `
@@ -55,11 +55,11 @@ async function loadPage() {
         ${product.name}
       </div>
       <div class="product-delivery-date">
-        ${productDetails.estimatedDeliveryTime !== order.orderTime
+        ${dayjs() >= dayjs(productDetails.estimatedDeliveryTime)
           ?
-          `Arriving on: ${dayjs(productDetails.estimatedDeliveryTime).format(`MMMM D`)}`
+          `Delivered.`
           :
-          `Delivered.`}
+          `Arriving on: ${dayjs(productDetails.estimatedDeliveryTime).format(`MMMM D`)}`}
       </div>
       <div class="product-quantity">
         Quantity: ${productDetails.quantity}
